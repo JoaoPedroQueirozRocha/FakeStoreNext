@@ -1,11 +1,13 @@
 "use client";
-import { Button, CardSection, Grid, Group, Image, Text } from "@mantine/core";
+import { Badge, Button, Grid, Group, Image, Text } from "@mantine/core";
 import { callApiProducts } from "@/server/api/router";
 import { useEffect, useState } from "react";
 import { Card } from "@mantine/core";
+import Navbar from "@/components/Header/Nav";
+import Link from "next/link";
 
 export default function Home() {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,37 +25,64 @@ export default function Home() {
   console.log(products);
 
   return (
-    <main>
-      <div className="flex flex-wrap justify-evenly m-14 gap-10">
-        {products
-          ? products.map((product) => (
-              <Grid grow className="h-90">
+    <>
+      <Navbar />
+      <div className="flex flex-wrap justify-between content-center m-14 gap-8">
+        <Grid justify="center">
+          {products
+            ? products.map((product) => (
                 <Grid.Col
                   key={product.id}
-                  span="auto"
-                  className="flex justify-center flex-wrap  "
+                  style={{ maxWidth: 250 }}
+                  sm={4}
+                  xs={4}
                 >
-                  <div className="flex flex-col justify-between items-center w-40 bg-white p-2">
-                    <div className="h-12">
-                      <Text color="black" className="text-ellipsis">
+                  <Card shadow="sm" padding="lg" radius="md" withBorder height>
+                    <Card.Section width="100px" className="flex justify-center">
+                      <Image
+                        src={product.image}
+                        height={160}
+                        width={160}
+                        className="justify-center"
+                        fit="fill"
+                        alt=""
+                      />
+                    </Card.Section>
+
+                    <Group position="apart" mt="md" mb="xs">
+                      <Text weight={500} className="h-12 overflow-hidden flex">
                         {product.title}
                       </Text>
-                    </div>
-                    <Image
-                      src={product.image}
-                      width={160}
-                      height={160}
-                      fit="fill"
-                    />
-                    <Button variant="default" color="black">
-                      Mais Detalhes
-                    </Button>
-                  </div>
+                      <Badge color="pink" variant="light">
+                        On Sale
+                      </Badge>
+                    </Group>
+
+                    <Text
+                      size="sm"
+                      color="dimmed"
+                      className="h-36 overflow-x-hidden overflow-y-scroll"
+                    >
+                      {product.description}
+                    </Text>
+
+                    <Link href={`/product/${product.id}`} passHref>
+                      <Button
+                        fullWidth
+                        mt="md"
+                        radius="md"
+                        variant="filled"
+                        className="bg-blue-500"
+                      >
+                        Mais detalhes
+                      </Button>
+                    </Link>
+                  </Card>
                 </Grid.Col>
-              </Grid>
-            ))
-          : null}
+              ))
+            : null}
+        </Grid>
       </div>
-    </main>
+    </>
   );
 }
