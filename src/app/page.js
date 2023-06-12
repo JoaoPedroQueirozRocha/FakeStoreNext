@@ -1,13 +1,15 @@
 "use client";
-import { Badge, Button, Grid, Group, Image, Text } from "@mantine/core";
+import { Badge, Button, Grid, Group, Image, Rating, Text } from "@mantine/core";
 import { callApiProducts } from "@/server/api/router";
 import { useEffect, useState } from "react";
 import { Card } from "@mantine/core";
 import Navbar from "@/components/Header/Nav";
 import Link from "next/link";
+import ModalPerfil from "@/components/Modal/Modal";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const [modalOpen, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,11 +24,14 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log(products);
+  const handleClick = () => {
+    console.log(modalOpen);
+  };
 
   return (
     <>
-      <Navbar />
+      <Navbar onClick={handleClick} />
+      {modalOpen ? <ModalPerfil /> : null}
       <div className="flex flex-wrap justify-between content-center m-14 gap-8">
         <Grid justify="center">
           {products
@@ -43,13 +48,13 @@ export default function Home() {
                         src={product.image}
                         height={160}
                         width={160}
-                        className="justify-center"
+                        className="justify-center m-4"
                         fit="fill"
                         alt=""
                       />
                     </Card.Section>
 
-                    <Group position="apart" mt="md" mb="xs">
+                    <Group position="center" mt="md" mb="xs">
                       <Text weight={500} className="h-12 overflow-hidden flex">
                         {product.title}
                       </Text>
@@ -57,14 +62,16 @@ export default function Home() {
                         On Sale
                       </Badge>
                     </Group>
-
-                    <Text
-                      size="sm"
-                      color="dimmed"
-                      className="h-36 overflow-x-hidden overflow-y-scroll"
-                    >
-                      {product.description}
-                    </Text>
+                    <Group position="center">
+                      <Rating
+                        fractions={5}
+                        value={product.rating.rate}
+                        readOnly
+                      />
+                      <Text size="sm" color="dimmed" className="">
+                        {product.rating.rate}
+                      </Text>
+                    </Group>
 
                     <Link href={`/product/${product.id}`} passHref>
                       <Button

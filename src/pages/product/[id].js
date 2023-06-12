@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function Product() {
   const router = useRouter();
   const id = router.query.id;
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
