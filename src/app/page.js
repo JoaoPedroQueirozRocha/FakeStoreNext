@@ -25,13 +25,18 @@ export default function Home() {
   }, []);
 
   const handleClick = () => {
+    setOpen(true);
     console.log(modalOpen);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
   };
 
   return (
     <>
       <Navbar onClick={handleClick} />
-      {modalOpen ? <ModalPerfil /> : null}
+      {modalOpen ? <ModalPerfil onClose={handleCloseModal} /> : null}
       <div className="flex flex-wrap justify-between content-center m-14 gap-8">
         <Grid justify="center">
           {products
