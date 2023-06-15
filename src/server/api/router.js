@@ -36,8 +36,8 @@ export const productByCategory = async (categoria) => {
     const res = await fetch(
       `https://fakestoreapi.com/products/category/${categoria}`
     );
-    const data = await res.json();
-    console.log(`products of ${categoria}`, data);
+    const data = res.json();
+    console.log(`products`, data);
     return data;
   } catch (error) {
     console.error(error);

@@ -15,7 +15,7 @@ import {
   getCategories,
   productByCategory,
 } from "@/server/api/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card } from "@mantine/core";
 import Navbar from "@/components/Header/Nav";
 import Link from "next/link";
@@ -26,18 +26,30 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [modalOpen, setOpen] = useState(false);
   const [categorias, setCategorias] = useState([]);
-  const [productsCategory, setByCategory] = useState([]);
-  let [activetab, setActiveTab] = useState();
+  let [activetab, setActiveTab] = useState("todos");
+  const stableActivetab = useMemo(() => activetab, [activetab]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await callApiProducts();
-        setProducts(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    if (activetab !== "todos") {
+      productByCategory(activetab)
+        .then((dataByCategory) => {
+          setProducts(dataByCategory);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      callApiProducts()
+        .then((data) => {
+          setProducts(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [stableActivetab]);
+
+  useEffect(() => {
     const fetchCategorias = async () => {
       try {
         const dataCategory = await getCategories();
@@ -46,21 +58,8 @@ export default function Home() {
         console.error(error);
       }
     };
-
-    fetchData();
     fetchCategorias();
   }, []);
-
-  useEffect(() => {
-    const fetchByCategory = async () => {
-      try {
-        const dataByCategory = await productByCategory(category);
-        setByCategory(dataByCategory);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  }, [activetab]);
 
   const handleClick = () => {
     setOpen(true);
