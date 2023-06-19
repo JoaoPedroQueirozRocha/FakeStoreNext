@@ -7,7 +7,11 @@ import {
   Avatar,
 } from "@mantine/core";
 import Link from "next/link";
-import { IconUser, IconDotsVertical } from "@tabler/icons-react";
+import {
+  IconUser,
+  IconDotsVertical,
+  IconShoppingCart,
+} from "@tabler/icons-react";
 import { useState } from "react";
 
 export default function Navbar(props) {
@@ -28,7 +32,9 @@ export default function Navbar(props) {
             <Avatar radius="xl" color="cyan" onClick={handleClick}>
               <IconUser />
             </Avatar>
-            <IconDotsVertical color="black"></IconDotsVertical>
+            <Link href="/bag">
+              <IconShoppingCart color="black"></IconShoppingCart>
+            </Link>
           </Group>
         </div>
       </div>

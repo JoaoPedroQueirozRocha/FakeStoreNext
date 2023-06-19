@@ -8,9 +8,11 @@ import {
   getCategories,
   productByCategory,
 } from "@/server/api/router";
-import { Grid, Tabs } from "@mantine/core";
+import { Button, Grid, Tabs } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { Router } from "next/router";
 
 export default function Home() {
   const router = useRouter();
@@ -67,8 +69,6 @@ export default function Home() {
 
   const handleClick = () => {
     loged ? setOpen(true) : router.push("/Signup");
-
-    console.log(modalOpen);
   };
 
   const handleCloseModal = () => {
@@ -93,6 +93,14 @@ export default function Home() {
                 : null}
             </Tabs.List>
           </Tabs>
+          <Button
+            onClick={() => {
+              notifications.show({
+                title: "teste",
+                message: "teste",
+              });
+            }}
+          ></Button>
         </div>
         <Grid justify="center">
           {products

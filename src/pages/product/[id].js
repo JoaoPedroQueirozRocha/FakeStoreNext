@@ -11,18 +11,23 @@ export default function Product() {
   const [product, setProduct] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await callApiProductId(id);
+    // const fetchData = async () => {
+    //   try {
+    //     const data = await callApiProductId(id);
+    //     setProduct(data);
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+    // fetchData();
+    callApiProductId(id)
+      .then((data) => {
         setProduct(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [id]);
-
-  console.log("product", product);
 
   return (
     <>

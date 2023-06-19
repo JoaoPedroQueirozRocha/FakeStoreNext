@@ -1,20 +1,29 @@
 import {
-  Card,
-  Image,
-  Group,
-  Text,
-  Badge,
-  Rating,
-  Button,
   ActionIcon,
+  Badge,
+  Button,
+  Card,
+  Group,
+  Image,
+  Rating,
+  Text,
 } from "@mantine/core";
+import { Notifications, notifications } from "@mantine/notifications";
+import { IconShoppingCartPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import "../../app/globals.css";
-import { IconShoppingCart } from "@tabler/icons-react";
 
 export default function ProductCards({ product }) {
+  const addProduct = () => {
+    notifications.show({
+      title: "Adicionado ao carrinho",
+      messsage: "teste",
+      color: "green",
+    });
+  };
+
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder height>
+    <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section width="100px" className="flex justify-center">
         <Image
           src={product.image}
@@ -59,9 +68,10 @@ export default function ProductCards({ product }) {
           size="lg"
           className="bg-blue-500 rounded"
         >
-          <IconShoppingCart size="1.5rem" />
+          <IconShoppingCartPlus size="1.5rem" onClick={addProduct} />
         </ActionIcon>
       </Group>
+      <Notifications />
     </Card>
   );
 }

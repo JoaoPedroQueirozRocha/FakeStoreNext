@@ -1,18 +1,18 @@
 import { Avatar, Group, Input, Modal, Title, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { Notifications, notifications } from "@mantine/notifications";
 import { IconUser } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import useRouter from "next/router";
 import { useState } from "react";
 
 export default function ModalPerfil({ onClose }) {
-  const [opened, { open, close }] = useDisclosure(false);
-  const [loged, setLoged] = useState(true);
-  const router = useRouter();
   let database = JSON.parse(localStorage.getItem("database"));
   let userId = JSON.parse(localStorage.getItem("userId"));
 
+  const [opened, { open, close }] = useDisclosure(false);
+  const [loged, setLoged] = useState(true);
+
   const usuario = database.users.find((item) => item.id == userId);
-  console.log(usuario);
 
   const handleClose = () => {
     close();
@@ -20,9 +20,14 @@ export default function ModalPerfil({ onClose }) {
   };
 
   const logout = () => {
+    notifications.show({
+      title: "Loged out",
+      message: "Deslogado com sucesso",
+      color: "red",
+    });
+    window.location.reload();
     localStorage.removeItem("userId");
     setLoged(false);
-    router.replace("/");
   };
 
   return loged ? (
@@ -44,6 +49,7 @@ export default function ModalPerfil({ onClose }) {
           <Text onClick={logout}>Logout</Text>
         </div>
       </Modal.Body>
+      <Notifications />
     </Modal>
   ) : null;
 }
