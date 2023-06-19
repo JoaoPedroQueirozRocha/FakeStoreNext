@@ -3,6 +3,7 @@ import { callApiProductId } from "@/server/api/router";
 import { Card, CardSection, Group, Image, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import "../../app/globals.css";
 
 export default function Product() {
   const router = useRouter();

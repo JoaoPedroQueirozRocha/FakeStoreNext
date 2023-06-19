@@ -16,12 +16,18 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(235, 235, 235)
+html {
+  height: 100vh;
+  margin: 0;
 }
 
-#tabs{
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(235, 235, 235);
+  margin: 0;
+}
+
+#tabs {
   display: flex;
   justify-content: center;
 }
