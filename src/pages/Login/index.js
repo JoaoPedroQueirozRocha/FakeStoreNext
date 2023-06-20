@@ -1,5 +1,6 @@
 import { Button, Input, PasswordInput, Text, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -27,14 +28,15 @@ export default function Login() {
     const exists = isRegistered(values.username, values.email);
 
     if (exists) {
-      console.log(database.users);
       const user = database.users.find(
         (item) => item.username === values.username
       );
       localStorage.setItem("userId", user.id);
       router.push("/");
-      // alert("user " + user.id);
-      // alert("exist");
+      notifications.show({
+        title: "Logado com sucesso!",
+        color: "green",
+      });
     } else {
       alert("erro");
     }

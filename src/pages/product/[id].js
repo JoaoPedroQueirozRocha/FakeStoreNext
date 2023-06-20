@@ -1,6 +1,14 @@
 import Navbar from "@/components/Header/Nav";
 import { callApiProductId } from "@/server/api/router";
-import { Card, CardSection, Group, Image, Text } from "@mantine/core";
+import {
+  Card,
+  CardSection,
+  Container,
+  Group,
+  Image,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../../app/globals.css";
@@ -11,40 +19,56 @@ export default function Product() {
   const [product, setProduct] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await callApiProductId(id);
+    // const fetchData = async () => {
+    //   try {
+    //     const data = await callApiProductId(id);
+    //     setProduct(data);
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+    // fetchData();
+    callApiProductId(id)
+      .then((data) => {
         setProduct(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [id]);
-
-  console.log("product", product);
 
   return (
     <>
       <Navbar />
       <div
-        className="justify-center w-full h-full"
-        style={{ display: "flex", width: "100%", justifyContent: "center" }}
+        className="justify-center w-full h-full align-middle"
+        style={{ display: "flex ", width: "100%", justifyContent: "center" }}
       >
         {product ? (
-          <Card w={460} className="flex">
-            <CardSection>
+          <Container w={860} h={450} className="flex bg-white">
+            <div className="flex align-middle">
               <Group noWrap>
                 <div>
-                  <Text>{product.title}</Text>
                   <Image src={product.image} height={160} width={160} alt="" />
                 </div>
-                <div>
-                  <Text>{product.description}</Text>
+                <div className="flex flex-col justify-evenly">
+                  <Title order={3} className="text-black">
+                    {product.title}
+                  </Title>
+                  <Text className="text-black">{product.description}</Text>
+                  <div>
+                    <Title order={4} className="text-black">
+                      R${product.price}
+                    </Title>
+                    <Title order={6} className="text-black">
+                      Em até 5x de {(product.price / 5).toFixed(2)}
+                    </Title>
+                  </div>
                 </div>
+                s
               </Group>
-            </CardSection>
-          </Card>
+            </div>
+          </Container>
         ) : null}
       </div>
     </>
