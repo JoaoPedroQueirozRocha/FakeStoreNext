@@ -2,35 +2,21 @@
 import ProductCards from "@/components/Cards/Cards";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
-import ModalPerfil from "@/components/Modal/Modal";
 import {
   callApiProducts,
   getCategories,
   productByCategory,
 } from "@/server/api/router";
-import { Button, Grid, Tabs } from "@mantine/core";
+import { Button, Grid, Loader, Tabs } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { Router } from "next/router";
 
 export default function Home() {
-  const router = useRouter();
-
   const [products, setProducts] = useState([]);
-  const [modalOpen, setOpen] = useState(false);
   const [categorias, setCategorias] = useState([]);
   let [activetab, setActiveTab] = useState("todos");
-  const [loged, setLoged] = useState(false);
   const stableActivetab = useMemo(() => activetab, [activetab]);
-  let userId;
-
-  useEffect(() => {
-    let userId = JSON.parse(localStorage.getItem("userId"));
-    if (userId) {
-      setLoged(true);
-    }
-  }, []);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     if (activetab !== "todos") {
@@ -48,6 +34,9 @@ export default function Home() {
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   }, [stableActivetab]);
@@ -62,23 +51,15 @@ export default function Home() {
       }
     };
     fetchCategorias();
-
-    userId = localStorage.getItem("userId");
-    userId ? setLoged(true) : setLoged(false);
   }, []);
 
-  const handleClick = () => {
-    loged ? setOpen(true) : router.push("/Signup");
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
-
-  return (
+  return isLoading ? (
+    <div id="loader">
+      <Loader size="xl"></Loader>
+    </div>
+  ) : (
     <main className="h-screen">
-      <Navbar onClick={handleClick} />
-      {modalOpen ? <ModalPerfil onClose={handleCloseModal} /> : null}
+      <Navbar />
       <div className="flex flex-wrap content-center m-14 gap-8">
         <div className="flex flex-row w-full" id="tabs">
           <Tabs onTabChange={setActiveTab}>
@@ -93,14 +74,6 @@ export default function Home() {
                 : null}
             </Tabs.List>
           </Tabs>
-          <Button
-            onClick={() => {
-              notifications.show({
-                title: "teste",
-                message: "teste",
-              });
-            }}
-          ></Button>
         </div>
         <Grid justify="center">
           {products
@@ -117,6 +90,7 @@ export default function Home() {
                       title: product.title,
                       image: product.image,
                       rating: product.rating.rate,
+                      price: product.price,
                     }}
                   />
                 </Grid.Col>

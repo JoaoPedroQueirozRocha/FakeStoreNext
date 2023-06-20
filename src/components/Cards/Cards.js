@@ -7,6 +7,7 @@ import {
   Image,
   Rating,
   Text,
+  Title,
 } from "@mantine/core";
 import { Notifications, notifications } from "@mantine/notifications";
 import { IconShoppingCartPlus } from "@tabler/icons-react";
@@ -35,14 +36,17 @@ export default function ProductCards({ product }) {
         />
       </Card.Section>
 
-      <Group position="center" mt="md" mb="xs">
+      <div position="center" mt="md" mb="xs">
         <Text weight={500} className="h-12 overflow-hidden flex">
           {product.title}
         </Text>
-        <Badge color="pink" variant="light">
-          On Sale
-        </Badge>
-      </Group>
+        <div className="flex flex-col justify-center items-center align-middle m-2">
+          <Title order={4}>R${product.price}</Title>
+          {/* <Badge color="pink" variant="light" className="w-20">
+            On Sale
+          </Badge> */}
+        </div>
+      </div>
       <Group position="center">
         <Rating fractions={5} value={product.rating} readOnly />
         <Text size="sm" color="dimmed" className="">
