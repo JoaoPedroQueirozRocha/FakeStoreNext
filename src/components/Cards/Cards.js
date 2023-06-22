@@ -20,6 +20,7 @@ export default function ProductCards({ product }) {
       title: "Adicionado ao carrinho",
       messsage: "teste",
       color: "green",
+      autoClose: 5000,
     });
   };
 
@@ -42,9 +43,6 @@ export default function ProductCards({ product }) {
         </Text>
         <div className="flex flex-col justify-center items-center align-middle m-2">
           <Title order={4}>R${product.price}</Title>
-          {/* <Badge color="pink" variant="light" className="w-20">
-            On Sale
-          </Badge> */}
         </div>
       </div>
       <Group position="center">
@@ -58,7 +56,6 @@ export default function ProductCards({ product }) {
         <Link href={`/product/${product.id}`} passHref>
           <Button
             fullWidth
-            // mt="md"
             radius="md"
             variant="filled"
             className="bg-blue-500"
@@ -75,7 +72,7 @@ export default function ProductCards({ product }) {
           <IconShoppingCartPlus size="1.5rem" onClick={addProduct} />
         </ActionIcon>
       </Group>
-      <Notifications />
+      <Notifications limit={3} />
     </Card>
   );
 }

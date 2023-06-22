@@ -1,6 +1,7 @@
 import Navbar from "@/components/Header/Nav";
 import { callApiProductId } from "@/server/api/router";
 import {
+  Button,
   Card,
   CardSection,
   Container,
@@ -12,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../../app/globals.css";
+import Footer from "@/components/Footer/Footer";
 
 export default function Product() {
   const router = useRouter();
@@ -37,32 +39,45 @@ export default function Product() {
       });
   }, [id]);
 
+  const addToCart = () => {
+    console.log(product);
+  };
+
   return (
     <>
       <Navbar />
       <div
-        className="justify-center w-full h-full align-middle"
+        className="justify-center w-full h-fit align-middle"
         style={{ display: "flex ", width: "100%", justifyContent: "center" }}
       >
         {product ? (
-          <Container w={860} h={450} className="flex bg-white">
+          <Container w={860} h={450} className="flex bg-white rounded ">
             <div className="flex align-middle">
-              <Group noWrap>
+              <Group noWrap style={{ gap: "10%", padding: "2%" }}>
                 <div>
                   <Image src={product.image} height={160} width={160} alt="" />
                 </div>
-                <div className="flex flex-col justify-evenly">
+                <div className="flex flex-col h-full justify-evenly">
                   <Title order={3} className="text-black">
                     {product.title}
                   </Title>
                   <Text className="text-black">{product.description}</Text>
                   <div>
-                    <Title order={4} className="text-black">
-                      R${product.price}
-                    </Title>
-                    <Title order={6} className="text-black">
-                      Em até 5x de {(product.price / 5).toFixed(2)}
-                    </Title>
+                    <Group>
+                      <div>
+                        <Title order={4} className="text-black">
+                          R${product.price}
+                        </Title>
+                        <Title order={6} className="text-black">
+                          Em até 5x de R${(product.price / 5).toFixed(2)}
+                        </Title>
+                      </div>
+                      <div>
+                        <Button className="bg-blue-500" onClick={addToCart}>
+                          Comprar
+                        </Button>
+                      </div>
+                    </Group>
                   </div>
                 </div>
                 s
@@ -71,6 +86,7 @@ export default function Product() {
           </Container>
         ) : null}
       </div>
+      <Footer></Footer>
     </>
   );
 }

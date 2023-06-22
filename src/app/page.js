@@ -7,8 +7,7 @@ import {
   getCategories,
   productByCategory,
 } from "@/server/api/router";
-import { Button, Grid, Loader, Tabs } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
+import { Grid, Loader, Tabs } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
@@ -75,7 +74,7 @@ export default function Home() {
             </Tabs.List>
           </Tabs>
         </div>
-        <Grid justify="center">
+        <Grid justify="center" style={{ width: "100%" }}>
           {products
             ? products.map((product) => (
                 <Grid.Col
