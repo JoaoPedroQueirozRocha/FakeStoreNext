@@ -1,19 +1,10 @@
+import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
 import { callApiProductId } from "@/server/api/router";
-import {
-  Button,
-  Card,
-  CardSection,
-  Container,
-  Group,
-  Image,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Button, Container, Group, Image, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../../app/globals.css";
-import Footer from "@/components/Footer/Footer";
 
 export default function Product() {
   const router = useRouter();
@@ -55,7 +46,13 @@ export default function Product() {
             <div className="flex align-middle">
               <Group noWrap style={{ gap: "10%", padding: "2%" }}>
                 <div>
-                  <Image src={product.image} height={160} width={160} alt="" />
+                  <Image
+                    src={product.image}
+                    height={250}
+                    width={190}
+                    fit="fill"
+                    alt=""
+                  />
                 </div>
                 <div className="flex flex-col h-full justify-evenly">
                   <Title order={3} className="text-black">
