@@ -8,6 +8,7 @@ import {
   productByCategory,
 } from "@/server/api/router";
 import { Grid, Loader, Tabs } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
@@ -59,6 +60,7 @@ export default function Home() {
   ) : (
     <main className="h-screen">
       <Navbar />
+      <Notifications limit={1} />
       <div className="flex flex-wrap content-center m-14 gap-8">
         <div className="flex flex-row w-full" id="tabs">
           <Tabs onTabChange={setActiveTab}>

@@ -16,18 +16,19 @@ import "../../app/globals.css";
 
 export default function ProductCards({ product }) {
   const addProduct = (productId) => {
+    console.log(productId);
     notifications.show({
       title: "Adicionado ao carrinho",
       messsage: "teste",
       color: "green",
       autoClose: 5000,
+      limit: 1,
     });
   };
 
   return (
     <>
-      <Notifications limit={1} />
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <Card shadow="sm" padding="lg" radius="md" withBorder id={product.id}>
         <Card.Section width="100px" className="flex justify-center">
           <Image
             src={product.image}
@@ -66,11 +67,14 @@ export default function ProductCards({ product }) {
             </Button>
           </Link>
           <ActionIcon
+            id={product.id}
             color="blue"
             variant="filled"
             size="lg"
             className="bg-blue-500 rounded"
-            onClick={() => {addProduct(product.id);}}
+            onClick={() => {
+              addProduct(product.id);
+            }}
           >
             <IconShoppingCartPlus size="1.5rem" />
           </ActionIcon>
