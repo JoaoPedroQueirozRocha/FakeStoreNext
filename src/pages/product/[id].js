@@ -1,34 +1,21 @@
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
-import { callApiProductId } from "@/server/api/router";
+// import { callApiProductId } from "@/server/api/router";
 import { Button, Container, Group, Image, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../../app/globals.css";
 
-export default function Product() {
-  const router = useRouter();
-  const id = router.query.id;
-  const [product, setProduct] = useState();
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+  const data = await res.json();
+  return { props: { data } };
+}
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const data = await callApiProductId(id);
-    //     setProduct(data);
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
-    // fetchData();
-    callApiProductId(id)
-      .then((data) => {
-        setProduct(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [id]);
+export default function Product({ data }) {
+  const router = useRouter();
+  const [product, setProduct] = useState();
 
   const addToCart = () => {
     console.log(product);
@@ -41,13 +28,13 @@ export default function Product() {
         className="justify-center w-full h-fit align-middle"
         style={{ display: "flex ", width: "100%", justifyContent: "center" }}
       >
-        {product ? (
+        {data ? (
           <Container w={860} h={450} className="flex bg-white rounded ">
             <div className="flex align-middle">
               <Group noWrap style={{ gap: "10%", padding: "2%" }}>
                 <div>
                   <Image
-                    src={product.image}
+                    src={data.image}
                     height={250}
                     width={190}
                     fit="fill"
@@ -56,17 +43,17 @@ export default function Product() {
                 </div>
                 <div className="flex flex-col h-full justify-evenly">
                   <Title order={3} className="text-black">
-                    {product.title}
+                    {data.title}
                   </Title>
-                  <Text className="text-black">{product.description}</Text>
+                  <Text className="text-black">{data.description}</Text>
                   <div>
                     <Group>
                       <div>
                         <Title order={4} className="text-black">
-                          R${product.price}
+                          R${data.price}
                         </Title>
                         <Title order={6} className="text-black">
-                          Em até 5x de R${(product.price / 5).toFixed(2)}
+                          Em até 5x de R${(data.price / 5).toFixed(2)}
                         </Title>
                       </div>
                       <div>
@@ -77,7 +64,6 @@ export default function Product() {
                     </Group>
                   </div>
                 </div>
-                s
               </Group>
             </div>
           </Container>
