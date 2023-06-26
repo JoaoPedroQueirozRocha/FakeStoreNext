@@ -35,7 +35,9 @@ export default function Login() {
       router.push("/");
       notifications.show({
         title: "Logado com sucesso!",
+        message: "Logado com sucesso",
         color: "green",
+        close: 5000,
       });
     } else {
       alert("erro");

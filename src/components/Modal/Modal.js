@@ -24,6 +24,7 @@ export default function ModalPerfil({ onClose }) {
       title: "Loged out",
       message: "Deslogado com sucesso",
       color: "red",
+      autoClose: 5000,
     });
     window.location.reload();
     localStorage.removeItem("userId");
