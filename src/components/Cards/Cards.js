@@ -16,7 +16,6 @@ import "../../app/globals.css";
 
 export default function ProductCards({ product }) {
   const addProduct = (productId) => {
-    console.log(productId);
     notifications.show({
       title: "Adicionado ao carrinho",
       messsage: "teste",

@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import "../../app/globals.css";
 
 export default function Login() {
   const router = useRouter();
