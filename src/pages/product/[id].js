@@ -17,9 +17,7 @@ export default function Product({ data }) {
   const router = useRouter();
   const [product, setProduct] = useState();
 
-  const addToCart = () => {
-    console.log(product);
-  };
+  const addToCart = () => {};
 
   return (
     <>

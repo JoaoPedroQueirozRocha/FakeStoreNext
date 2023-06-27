@@ -11,9 +11,15 @@ import { Grid, Loader, Tabs } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { useEffect, useMemo, useState } from "react";
 
-export default function Home() {
+export async function getStaticProps() {
+  const res = await fetch("https://fakestoreapi.com/products/categories");
+  const data = await res.json();
+  const dataCategorias = Object.values(data);
+  return { props: { dataCategorias } };
+}
+
+export default function Home({ dataCategorias }) {
   const [products, setProducts] = useState([]);
-  const [categorias, setCategorias] = useState([]);
   let [activetab, setActiveTab] = useState("todos");
   const stableActivetab = useMemo(() => activetab, [activetab]);
   const [isLoading, setLoading] = useState(true);
@@ -41,17 +47,17 @@ export default function Home() {
     }
   }, [stableActivetab]);
 
-  useEffect(() => {
-    const fetchCategorias = async () => {
-      try {
-        const dataCategory = await getCategories();
-        setCategorias(dataCategory);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCategorias();
-  }, []);
+  // useEffect(() => {
+  // const fetchCategorias = async () => {
+  //   try {
+  //     const dataCategory = await getCategories();
+  //     setCategorias(dataCategory);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // fetchCategorias();
+  // }, []);
 
   return isLoading ? (
     <div id="loader">
@@ -66,8 +72,8 @@ export default function Home() {
           <Tabs onTabChange={setActiveTab}>
             <Tabs.List>
               <Tabs.Tab value="todos">TODOS</Tabs.Tab>
-              {categorias
-                ? categorias.map((categoria) => (
+              {dataCategorias
+                ? dataCategorias.map((categoria) => (
                     <Tabs.Tab key={categoria} value={categoria}>
                       {categoria.toLocaleUpperCase()}
                     </Tabs.Tab>
