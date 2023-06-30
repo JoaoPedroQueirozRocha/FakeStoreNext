@@ -17,13 +17,14 @@ export async function getStaticProps() {
 export default function Home({ dataCategorias }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  let [activetab, setActiveTab] = useState("todos");
+  let [activetab, setActiveTab] = useState(null);
   const stableActivetab = useMemo(() => activetab, [activetab]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     callApiProducts()
       .then((data) => {
+        console.log("dados", data);
         setProducts(data);
         setLoading(false);
       })
@@ -34,7 +35,11 @@ export default function Home({ dataCategorias }) {
   }, []);
 
   useEffect(() => {
-    if (activetab !== "todos") {
+    console.log("Products atualizados:", products);
+  }, [products]);
+
+  useEffect(() => {
+    if (activetab !== "todos" && activetab !== null) {
       const filtered = products.filter(
         (product) => product.category === activetab
       );
@@ -42,7 +47,7 @@ export default function Home({ dataCategorias }) {
     } else {
       setFilteredProducts(products);
     }
-  }, [stableActivetab]);
+  }, [stableActivetab, products]);
 
   return isLoading ? (
     <div id="loader">
