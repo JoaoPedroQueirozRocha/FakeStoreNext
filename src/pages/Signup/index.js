@@ -26,7 +26,7 @@ export default function LoginSignup() {
   });
 
   const handleForm = (values) => {
-    let database = JSON.parse(localStorage.getItem("database")) || {
+    let database = JSON.parse(localStorage.getItem("dataUsers")) || {
       users: [],
       nextId: 1,
     };
@@ -48,9 +48,9 @@ export default function LoginSignup() {
     database.nextId = 1 + database.nextId;
     database.users.push(newUser);
     database = JSON.stringify(database);
-    localStorage.removeItem("database");
-    localStorage.setItem("database", database);
-    localStorage.setItem("userId", newUser.id);
+    localStorage.removeItem("dataUsers");
+    localStorage.setItem("dataUsers", database);
+    localStorage.setItem("userKey", newUser.id);
     router.push("/");
   };
 

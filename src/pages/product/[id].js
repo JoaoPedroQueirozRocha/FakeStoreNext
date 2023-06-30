@@ -14,9 +14,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Product({ data }) {
-  const router = useRouter();
-  const [product, setProduct] = useState();
-
   const addToCart = () => {};
 
   return (
@@ -55,7 +52,7 @@ export default function Product({ data }) {
                         </Title>
                       </div>
                       <div>
-                        <Button className="bg-blue-500" onClick={addToCart}>
+                        <Button className="bg-ligh-blue" onClick={addToCart}>
                           Comprar
                         </Button>
                       </div>

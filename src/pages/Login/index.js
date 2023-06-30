@@ -9,7 +9,7 @@ export default function Login() {
   const router = useRouter();
   let database;
   if (typeof window !== "undefined") {
-    database = JSON.parse(localStorage.getItem("database"));
+    database = JSON.parse(localStorage.getItem("dataUsers"));
   }
 
   const form = useForm({
@@ -32,7 +32,7 @@ export default function Login() {
       const user = database.users.find(
         (item) => item.username === values.username
       );
-      localStorage.setItem("userId", user.id);
+      localStorage.setItem("userKey", user.id);
       router.push("/");
       notifications.show({
         title: "Logado com sucesso!",
