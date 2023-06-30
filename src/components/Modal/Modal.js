@@ -6,8 +6,8 @@ import useRouter from "next/router";
 import { useState } from "react";
 
 export default function ModalPerfil({ onClose }) {
-  let database = JSON.parse(localStorage.getItem("database"));
-  let userId = JSON.parse(localStorage.getItem("userId"));
+  let database = JSON.parse(localStorage.getItem("dataUsers"));
+  let userId = JSON.parse(localStorage.getItem("userKey"));
 
   const [opened, { open, close }] = useDisclosure(false);
   const [loged, setLoged] = useState(true);
@@ -27,7 +27,7 @@ export default function ModalPerfil({ onClose }) {
       autoClose: 5000,
     });
     window.location.reload();
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userKey");
     setLoged(false);
   };
 
@@ -47,7 +47,9 @@ export default function ModalPerfil({ onClose }) {
               <Text baseline>{usuario.email}</Text>
             </Group>
           </div>
-          <Text onClick={logout}>Logout</Text>
+          <Text onClick={logout} className="cursor-pointer">
+            Logout
+          </Text>
         </div>
       </Modal.Body>
       <Notifications />

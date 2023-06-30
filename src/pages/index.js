@@ -2,11 +2,7 @@
 import ProductCards from "@/components/Cards/Cards";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
-import {
-  callApiProducts,
-  getCategories,
-  productByCategory,
-} from "@/server/api/router";
+import { callApiProducts, productByCategory } from "@/server/api/router";
 import { Grid, Loader, Tabs } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { useEffect, useMemo, useState } from "react";
@@ -20,44 +16,33 @@ export async function getStaticProps() {
 
 export default function Home({ dataCategorias }) {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   let [activetab, setActiveTab] = useState("todos");
   const stableActivetab = useMemo(() => activetab, [activetab]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    callApiProducts()
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
     if (activetab !== "todos") {
-      productByCategory(activetab)
-        .then((dataByCategory) => {
-          setProducts(dataByCategory);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      const filtered = products.filter(
+        (product) => product.category === activetab
+      );
+      setFilteredProducts(filtered);
     } else {
-      callApiProducts()
-        .then((data) => {
-          setProducts(data);
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      setFilteredProducts(products);
     }
   }, [stableActivetab]);
-
-  // useEffect(() => {
-  // const fetchCategorias = async () => {
-  //   try {
-  //     const dataCategory = await getCategories();
-  //     setCategorias(dataCategory);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // fetchCategorias();
-  // }, []);
 
   return isLoading ? (
     <div id="loader">
@@ -83,8 +68,8 @@ export default function Home({ dataCategorias }) {
           </Tabs>
         </div>
         <Grid justify="center" style={{ width: "100%" }}>
-          {products
-            ? products.map((product) => (
+          {filteredProducts
+            ? filteredProducts.map((product) => (
                 <Grid.Col
                   key={product.id}
                   style={{ maxWidth: 250 }}

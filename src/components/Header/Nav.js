@@ -11,11 +11,11 @@ export default function Navbar(props) {
 
   //modal
   useEffect(() => {
-    let userId = JSON.parse(localStorage.getItem("userId"));
+    let userId = JSON.parse(localStorage.getItem("userKey"));
     if (userId) {
       setLoged(true);
     }
-    userId = localStorage.getItem("userId");
+    userId = localStorage.getItem("userKey");
     userId ? setLoged(true) : setLoged(false);
   }, []);
 

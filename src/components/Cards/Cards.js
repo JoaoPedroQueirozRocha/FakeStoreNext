@@ -60,7 +60,7 @@ export default function ProductCards({ product }) {
               fullWidth
               radius="md"
               variant="filled"
-              className="bg-blue-500"
+              className="bg-ligh-blue"
             >
               Mais detalhes
             </Button>
@@ -70,7 +70,7 @@ export default function ProductCards({ product }) {
             color="blue"
             variant="filled"
             size="lg"
-            className="bg-blue-500 rounded"
+            className="bg-ligh-blue rounded"
             onClick={() => {
               addProduct(product.id);
             }}
