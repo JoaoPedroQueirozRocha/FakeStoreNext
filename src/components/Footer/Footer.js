@@ -3,8 +3,17 @@ import "../../app/globals.css";
 
 export default function Footer() {
   return (
-    <div className="flex flex-row align-middle w-full  h-20 items-center md:pl-12 bg-white flex-1 bottom-0 relative">
-      <Title color="black">Footer</Title>
-    </div>
+    // <footer className="flex flex-row relative bottom-0 align-middle w-full items-center md:pl-12 bg-gray-400 py-4 ">
+    //   <div className="container mx-auto">
+    //     <Title color="black">Footer</Title>
+    //   </div>
+    // </footer>
+    <footer height={{ base: 70 }} withBorder={true}>
+      <div className="flex flex-row relative bottom-0 align-middle w-full h-full items-center md:pl-12 bg-gray-400">
+        <div className="flex flex-row w-full h-full items-center justify-between">
+          <Title color="black">Footer</Title>
+        </div>
+      </div>
+    </footer>
   );
 }
