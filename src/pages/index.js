@@ -70,7 +70,7 @@ export default function Home({ dataCategorias }) {
     <main className="min-h-screen flex flex-col ">
       <Navbar />
       <Notifications limit={1} />
-      <div className="flex flex-wrap content-center m-14 gap-8">
+      <div className="flex flex-wrap content-center m-14 gap-8 flex-grow">
         <div className="flex flex-row w-full" id="tabs">
           <Tabs onTabChange={setActiveTab}>
             <Tabs.List>
@@ -85,28 +85,33 @@ export default function Home({ dataCategorias }) {
             </Tabs.List>
           </Tabs>
         </div>
-        <Grid justify="center" style={{ width: "100%" }}>
-          {filteredProducts
-            ? filteredProducts.map((product) => (
-                <Grid.Col
-                  key={product.id}
-                  style={{ maxWidth: 250 }}
-                  sm={4}
-                  xs={4}
-                >
-                  <ProductCards
-                    product={{
-                      id: product.id,
-                      title: product.title,
-                      image: product.image,
-                      rating: product.rating.rate,
-                      price: product.price,
-                    }}
-                  />
-                </Grid.Col>
-              ))
-            : null}
-        </Grid>
+        <div
+          className="flex flex-row flex-wrap w-full"
+          style={{ height: "fit-content" }}
+        >
+          <Grid justify="center" style={{ width: "100%" }}>
+            {filteredProducts
+              ? filteredProducts.map((product) => (
+                  <Grid.Col
+                    key={product.id}
+                    style={{ maxWidth: 250 }}
+                    sm={4}
+                    xs={4}
+                  >
+                    <ProductCards
+                      product={{
+                        id: product.id,
+                        title: product.title,
+                        image: product.image,
+                        rating: product.rating.rate,
+                        price: product.price,
+                      }}
+                    />
+                  </Grid.Col>
+                ))
+              : null}
+          </Grid>
+        </div>
       </div>
       <Footer />
     </main>
