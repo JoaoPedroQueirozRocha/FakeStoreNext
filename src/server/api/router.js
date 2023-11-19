@@ -1,4 +1,4 @@
-export const callApiProducts = async () => {
+export const fetchProducts = async () => {
   try {
     const res = await fetch(`https://fakestoreapi.com/products`);
     const data = await res.json();
@@ -8,7 +8,7 @@ export const callApiProducts = async () => {
   }
 };
 
-export const callApiProductId = async (id) => {
+export const fetchProductById = async (id) => {
   try {
     const res = await fetch(`https://fakestoreapi.com/products/${id}`);
     const data = await res.json();
