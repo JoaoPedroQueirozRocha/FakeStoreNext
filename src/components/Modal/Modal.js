@@ -47,7 +47,7 @@ export default function ModalPerfil({ onClose }) {
               <Text baseline>{usuario.email}</Text>
             </Group>
           </div>
-          <Text onClick={logout} className="cursor-pointer">
+          <Text onClick={logout} className="cursor-pointer text-red-600 font-medium">
             Logout
           </Text>
         </div>

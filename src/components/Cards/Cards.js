@@ -15,7 +15,8 @@ import Link from "next/link";
 import "../../app/globals.css";
 
 export default function ProductCards({ product }) {
-  const addProduct = (productId) => {
+
+  const showCardAdded = () =>{
     notifications.show({
       title: "Adicionado ao carrinho",
       messsage: "teste",
@@ -23,6 +24,24 @@ export default function ProductCards({ product }) {
       autoClose: 5000,
       limit: 1,
     });
+  }
+
+  const addProduct = (productId) => {
+
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const isProductInCart = existingCart.findIndex((item) => item.id === productId);
+
+    if(isProductInCart >= 0){
+      existingCart[isProductInCart].quantity += 1;
+    }
+    else{
+      existingCart.push({id: productId, quantity: 1});
+    }
+
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    showCardAdded();
+
   };
 
   return (
