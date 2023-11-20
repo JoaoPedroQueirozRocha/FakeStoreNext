@@ -3,14 +3,17 @@ import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
 import { useEffect, useMemo, useState } from "react";
 import "../app/globals.css";
-import { Grid, Loader } from "@mantine/core";
+import { Container, Grid, Loader, SimpleGrid, TextInput, Title } from "@mantine/core";
 import { fetchProductById } from "@/server/api/router";
 import ProductCards from "@/components/Cards/Cards";
+import CartCards from "@/components/Cards/CartCards";
+import CartValue from "@/components/Cards/CartValue";
 
 export default function bag() {
   const [isLoading, setLoading] = useState(true);
   const [cardItems, setCardItems] = useState([]);
-
+  const [totalValue, setTotalValue] = useState(0);
+  
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
     setCardItems(storedCartItems);
@@ -28,6 +31,22 @@ export default function bag() {
     setLoading(false);
   }, []);
 
+  const calculateTotal = () => {
+    const total = cardItems.reduce((acc, product) => {
+      const productPrice = product.price;
+      const productQuantity =  product.quantity
+      return acc + productPrice * productQuantity
+    }, 0)
+    return total
+  }
+
+  useEffect(() =>{
+    let newTotalValue = calculateTotal();
+    setTotalValue(newTotalValue)
+
+  }, [cardItems]);
+
+
   return (
     <>
       {isLoading ? (
@@ -35,34 +54,34 @@ export default function bag() {
           <Loader size="xl"></Loader>
         </div>
       ) : (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col min-w-full">
           <Navbar />
-          <main className="overflow-auto h-screen">
-            <Grid>
+          <main className="min-h-screen">
+            <SimpleGrid>
             {cardItems 
             ? ( cardItems.map((product) => {
-              console.log("Product:", product)
               return(
-              <Grid.Col
+              <div
               key={product.id}
-              style={{maxWidth: 250}}
               sm={4}
               xs={4}
+              className="p-2"
               >
-                <ProductCards
+                <CartCards
                   product={{
                     id: product.id,
                     title: product.title,
                     image: product.image,
-                    // rating: product.rating.rate,
                     price: product.price,
                   }}
                 />
-              </Grid.Col>
+              </div>
               )
                 })) : 
             null}
-            </Grid>
+            </SimpleGrid>
+
+            <CartValue/>
           </main>
           <Footer />
         </div>
