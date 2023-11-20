@@ -81,8 +81,8 @@ export default function bag() {
             null}
             </SimpleGrid>
 
-            <CartValue/>
           </main>
+          <CartValue/>
           <Footer />
         </div>
       )}

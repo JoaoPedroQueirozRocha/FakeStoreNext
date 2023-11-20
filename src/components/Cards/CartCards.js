@@ -33,9 +33,8 @@ export default function CartCards({product}){
             window.dispatchEvent(storageChangeEvent);
         
         }
-
-
     }
+    
 
     return (
         <div className="flex flex-row bg-slate-400 justify-between items-center p-2 rounded">

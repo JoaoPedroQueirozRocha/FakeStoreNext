@@ -1,7 +1,8 @@
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Header/Nav";
 // import { callApiProductId } from "@/server/api/router";
-import { Button, Container, Group, Image, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Image, Text, Title} from "@mantine/core";
+import { Notifications, notifications } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import "../../app/globals.css";
@@ -14,13 +15,39 @@ export async function getServerSideProps(context) {
 }
 
 export default function Product({ data }) {
-  const addToCart = () => {};
+
+  const showCardAdded = () =>{
+    notifications.show({
+      title: "Adicionado ao carrinho",
+      messsage: "teste",
+      color: "green",
+      autoClose: 5000,
+      limit: 1,
+    });
+  }
+
+  const addToCart = (dataId) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const isProductInCart = existingCart.findIndex((item) => item.id === dataId);
+
+    if(isProductInCart >= 0){
+      existingCart[isProductInCart].quantity += 1;
+    }
+    else{
+      existingCart.push({id: dataId, quantity: 1});
+    }
+
+    localStorage.setItem('cart', JSON.stringify(existingCart));
+    showCardAdded();
+
+  };
 
   return (
     <>
       <Navbar />
       <div
-        className="justify-center w-full h-fit align-middle"
+        className="justify-center w-full min-h-screen align-middle items-center"
         style={{ display: "flex ", width: "100%", justifyContent: "center" }}
       >
         {data ? (
@@ -52,7 +79,7 @@ export default function Product({ data }) {
                         </Title>
                       </div>
                       <div>
-                        <Button className="bg-ligh-blue" onClick={addToCart}>
+                        <Button className="bg-ligh-blue" onClick={addToCart(data.id)}>
                           Comprar
                         </Button>
                       </div>
