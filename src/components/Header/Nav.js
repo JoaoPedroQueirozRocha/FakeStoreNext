@@ -29,12 +29,12 @@ export default function Navbar(props) {
 
   return (
     <>
-      <Head height={{ base: 70 }} withBorder={true}>
+      <Head height={{ base: 70 }} withBorder={true} className="bg-blue-500">
         <div className="flex flex-row align-middle w-full h-full items-center md:pl-12">
           <div className="flex flex-row w-full h-full items-center justify-between">
             <Group>
               <Link href="/" style={{ textDecoration: "none" }}>
-                <Title c={"blue"}>Web Store</Title>
+                <Title c={"white"}>Web Store</Title>
               </Link>
             </Group>
             <Group mr={20}>
@@ -42,7 +42,7 @@ export default function Navbar(props) {
                 <IconUser />
               </Avatar>
               <Link href="/bag">
-                <IconShoppingCart color="black"></IconShoppingCart>
+                <IconShoppingCart color="white"></IconShoppingCart>
               </Link>
             </Group>
           </div>
