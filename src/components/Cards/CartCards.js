@@ -37,7 +37,7 @@ export default function CartCards({product}){
     
 
     return (
-        <div className="flex flex-row bg-slate-400 justify-between items-center p-2 rounded">
+        <div className="flex flex-row bg-cyan-700 justify-between items-center p-2 rounded">
             <Group>
                 <Image
                 src={product.image}
